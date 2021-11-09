@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 public class CommentId implements Serializable {
 	
 
-	private static final long serialVersionUID = -4160249136014105960L;
+	private static final long serialVersionUID = -4160249136014105960L;//Bla bla..................
 	private User user;
 	private Feature feature;
 	
