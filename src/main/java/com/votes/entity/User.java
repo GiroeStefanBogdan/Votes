@@ -15,7 +15,7 @@ public class User {
 	private String password;
 	private String name;
 	
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)//strategy=... is for autoincrement id
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)//strategy=... is for autoincrement id	
 	public Long getId() {
 		return id;
 	}
