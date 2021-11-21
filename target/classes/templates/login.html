@@ -2,15 +2,15 @@
 <html xmlns:th="http://thymeleaf.org">
 	<head>
 		<title> Votes Login</title>
-		<script <!-- jquery slim minified for pretty pages -->
+		<script 
   			src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
   			integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
   			crossorigin="anonymous">
   		</script>
   		<script type="text/javascript"> 
-  			$(function(){<!-- When the app is load we can execute jquery code. Do not execute this function until the app is not loaded -->
-  				$("#CreateAccount").click(function(){
-  					window.location.href="/register";
+  			$(function(){<!-- When the app is load we can execute jquery code. Do not execute this function until the app is loaded -->
+  				$("#createAccount").click(function(){
+  					window.location.href = "/register";
   					
   				});
   			});
@@ -46,7 +46,7 @@
         </p>
          <div>
             <button type="submit" class="btn">Log in</button>
-             <button type="button" id="CreateAccount" class="btn">Create Account</button>
+             <button type="button" class="btn" id="createAccount">Create Account</button>
 		</div>
 		
 		
