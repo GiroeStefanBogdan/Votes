@@ -38,6 +38,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 		.authorizeRequests()
 			.antMatchers("/").permitAll()//Permit all to see index page
+			.antMatchers("/sterge").permitAll()
 			.antMatchers("/register").permitAll()
 			.antMatchers("/admin/**").hasRole("ADMIN")
 			.anyRequest().hasRole("USER").and()
