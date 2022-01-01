@@ -19,10 +19,7 @@ public class LoginController {
 		return "login";
 	}
 	
-	@GetMapping("/sterge")
-	public String sterge() {
-		return "sterge";
-	}
+
 	
 	@GetMapping("/register")
 	public String register(ModelMap model) {
