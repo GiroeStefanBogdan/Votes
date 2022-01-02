@@ -38,12 +38,19 @@ public class ProductController {
 	 if(productOpt.isPresent()) {
 		 Product product = productOpt.get();
 		 model.put("product", product);
-	 }else {
+	 }else {	
 		 response.sendError(HttpStatus.NOT_FOUND.value(), "Product with id " + productId + " was not found");
 		 return "product";
 	 }
 	 
 		return "product";
+	}
+	
+	@PostMapping("/products/{productId}")
+	public String saveProduct(@PathVariable Long productId, Product product) {
+		product = productRepo.save(product);
+		
+		return "redirect:/products/" + product.getId();
 	}
 	
 	@PostMapping("/products")
