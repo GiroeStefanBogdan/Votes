@@ -18,7 +18,6 @@ class UserDetailsServiceTest {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String rawPassword = "asdfasdf";
 		String encodedPassword = encoder.encode(rawPassword);
-		
 		System.out.println(encodedPassword);
 		
 		assertThat(rawPassword, not(encodedPassword));
