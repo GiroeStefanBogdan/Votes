@@ -19,4 +19,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 	
 	//select * from product where user = :user
 	List<Product> findByUser (@Param("month") User user);
+	
+	Optional<Product> findByName(String name);
+	
+	
 }
