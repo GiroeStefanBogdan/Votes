@@ -13,17 +13,19 @@ import com.votes.service.FeatureService;
 @Controller
 public class featureController {
 	
-	@Autowired
+	@Autowired	
 	private FeatureService featureService;
 	
-	@PostMapping("/products/productId/features")
+	@PostMapping("/products/{productId}/features")
 	public String createFeature(@PathVariable Long productId) {
 		Feature feature = featureService.createFeature(productId);
 		return "redirect:/products/" + productId + "/features/" + feature.getId();
 	}
 
-	@GetMapping("/products/productId/features/{featureId}")
+	@GetMapping("/products/{productId}/features/{featureId}")
 	public String getFeature(@PathVariable Long productId, @PathVariable Long featureId) {
 		return "feature";
+		
+	
 	}
 }
