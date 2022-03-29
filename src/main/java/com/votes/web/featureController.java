@@ -8,24 +8,25 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.votes.entity.Feature;
 import com.votes.service.FeatureService;
 
-//@RequestMapping("/products/productId/features")
+@RequestMapping("/products/{productId}/features")
 @Controller
 public class featureController {
 	
 	@Autowired	
 	private FeatureService featureService;
 	
-	@PostMapping("/products/{productId}/features")
+	@PostMapping("")
 	public String createFeature(@PathVariable Long productId) {
 		Feature feature = featureService.createFeature(productId);
 		return "redirect:/products/" + productId + "/features/" + feature.getId();
 	}
 
-	@GetMapping("/products/{productId}/features/{featureId}")
+	@GetMapping("{featureId}")
 	public String getFeature(ModelMap model, @PathVariable Long productId, @PathVariable Long featureId) {
 		Optional<Feature> featureOpt = featureService.findById(featureId);
 		if(featureOpt.isPresent()) {
