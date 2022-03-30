@@ -1,7 +1,11 @@
 package com.votes.web;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,7 +20,8 @@ import com.votes.service.FeatureService;
 @RequestMapping("/products/{productId}/features")
 @Controller
 public class featureController {
-	
+
+	Logger log = LoggerFactory.getLogger(featureController.class);
 	@Autowired	
 	private FeatureService featureService;
 	
@@ -39,9 +44,15 @@ public class featureController {
 	public String updateFeature (Feature feature, @PathVariable Long productId, @PathVariable Long featureId) {
 	feature = featureService.save(feature);
 		
+		String encodedProductName;
+		try {
+			encodedProductName = URLEncoder.encode(feature.getProduct().getName(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			log.warn("Unable to encode the URL String: " + feature.getProduct().getName() + "Redirecting to dashboard insted of the intended product user view page.");
+			return "redirect:/dashboard";
+		}
 		
-		
-		return "redirect:/products/" + productId + "/features/" + feature.getId();
+		return "redirect:/p/"+encodedProductName;
 	}
 	
 }
