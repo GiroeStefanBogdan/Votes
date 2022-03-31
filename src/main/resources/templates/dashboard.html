@@ -17,6 +17,19 @@
 				</div>	
 			</div>
 			
+			
+			<div class="card" th:each="product : ${products}">
+				  <div class="card-body">
+				    <h5 class="card-title" th:text="${product.name}">Special title treatment</h5>
+					<h6 class="card-subtitle mb-2 text-muted" th:text="${product.published ?  'Published': 'Not Published'}">Card subtitle</h6>
+					<a th:href="@{/products/{productId}(productId=${product.id})}" class="btn btn-info">Edit</a>
+					
+				    <a th:href="@{/p/{productName}(productName=${product.name})}" class="btn btn-info">View Feature Requests</a>
+				  </div>
+			</div>
+			
+			
+			
 			<div class="container-fluid bg-secondary bg-gradient text-light p-5">
 	   				 <div class="container bg-gradient p-5">
 						<div th:if="${products != null}">
