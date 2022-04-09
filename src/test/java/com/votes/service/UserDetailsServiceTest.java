@@ -18,11 +18,23 @@ class UserDetailsServiceTest {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String rawPassword = "asdfasdf";
 		String encodedPassword = encoder.encode(rawPassword);
-		System.out.println(encodedPassword);
+	
+		boolean isPasswordMatches = encoder.matches(
+		        "Gs199042",
+		        "$2a$10$cAR7sSb.lFIFMdwtd/sGIuY6FLOsCZfz33HQIr/RI0IJcRjPWYIpm"
+		);
+
+
+		if (isPasswordMatches) { // correct password
+		 System.out.println("Da, aia e parola");
+		
+		//System.out.println(encodedPassword);
 		
 		assertThat(rawPassword, not(encodedPassword));
 		
-		
-	}
+		}else {
+			System.out.println("Nu e buna parola");
+		}
 
 } 
+}

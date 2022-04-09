@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,19 +16,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.votes.entity.Feature;
+import com.votes.entity.User;
 import com.votes.service.FeatureService;
 
-@RequestMapping("/products/{productId}/features")
+
 @Controller
+@RequestMapping("/products/{productId}/features")
 public class featureController {
 
 	Logger log = LoggerFactory.getLogger(featureController.class);
+	
 	@Autowired	
 	private FeatureService featureService;
 	
 	@PostMapping("")
-	public String createFeature(@PathVariable Long productId) {
-		Feature feature = featureService.createFeature(productId);
+	public String createFeature(@AuthenticationPrincipal User user, @PathVariable Long productId) {
+		Feature feature = featureService.createFeature(productId,  user);
 		return "redirect:/products/" + productId + "/features/" + feature.getId();
 	}
 
@@ -41,8 +45,9 @@ public class featureController {
 	}
 	
 	@PostMapping("{featureId}")
-	public String updateFeature (Feature feature, @PathVariable Long productId, @PathVariable Long featureId) {
-	feature = featureService.save(feature);
+	public String updateFeature (@AuthenticationPrincipal User user, Feature feature, @PathVariable Long productId, @PathVariable Long featureId) {
+		feature.setUser(user);
+		feature = featureService.save(feature);
 		
 		String encodedProductName;
 		try {
