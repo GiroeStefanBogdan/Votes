@@ -1,4 +1,4 @@
-This is my license theme and it is written in java
+Java
 
 A business owner can create a page which allows visitors to recommend
 new feature to the business owners app.
