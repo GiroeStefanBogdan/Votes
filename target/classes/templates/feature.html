@@ -44,7 +44,10 @@
 					</div>
 				</form>
 				<div th:each="comment: ${comments}">
-					<span th:text="${comment.getText()}"></span>
+					<span th:if="${comment.comment == null}" th:text="${comment.getText()}"></span>
+					<div th:each="commentLevel1 : ${comment.comments}" style="margin-left: 1em;">
+						<span th:text="${commentLevel1.getText()}"></span>
+					</div>
 				</div>
 			</div>
 		</div>
