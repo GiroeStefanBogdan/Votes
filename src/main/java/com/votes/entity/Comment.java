@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Comment {
 	private Long id;
@@ -40,6 +42,7 @@ public class Comment {
 		this.id = id;
 	}
 	@ManyToOne
+	@JsonIgnore
 	public User getUser() {
 		return user;
 	}
@@ -47,6 +50,7 @@ public class Comment {
 		this.user = user;
 	}
 	@ManyToOne
+	@JsonIgnore
 	public Feature getFeature() {
 		return feature;
 	}
@@ -69,6 +73,7 @@ public class Comment {
 	}
 	@ManyToOne
 	@JoinColumn(name="comment_id", nullable = true)
+	@JsonIgnore
 	public Comment getComment() {
 		return comment;
 	}

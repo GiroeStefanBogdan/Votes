@@ -18,7 +18,7 @@ class UserDetailsServiceTest {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String rawPassword = "asdfasdf";
 		String encodedPassword = encoder.encode(rawPassword);
-	
+		System.out.println(encodedPassword);
 		boolean isPasswordMatches = encoder.matches(
 		        "Gs199042",
 		        "$2a$10$cAR7sSb.lFIFMdwtd/sGIuY6FLOsCZfz33HQIr/RI0IJcRjPWYIpm"

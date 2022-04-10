@@ -22,9 +22,7 @@
 				<input type="hidden" th:field="${feature.product}"/>
 				<input type="hidden" th:field="${feature.status}"/>
 				
-				<div th:text="|feature.id = ${feature.id}|"></div>
-				<div th:text="|user.id = ${user.getId()}|"></div>
-				
+			
 				<div class="mb-3">
 					<label for="exampleInputTitle" class="form-label">Title: </label>
 					<input type="text" class="form-control" id="exampleInputTitle" th:field="${feature.title}" th:attrappend="disabled=${user.id == feature.user.id ? null : 'disabled'}"/>			
@@ -39,6 +37,12 @@
 			</form>
 			<div style="margin-top: 2em;"> 
 				<h2>Comments</h2>
+				<form action="">
+					<div class="mb-3" style="margin-top=1.5em">
+						<label for="exampleInputDescription" class="form-label">Leave a comment bellow</label>
+						<textarea th:field="${feature.description}" class="form-control" th:attrappend="disabled=${user.id == feature.user.id ? null : 'disabled'}"> </textarea>
+					</div>
+				</form>
 				<div th:each="comment: ${comments}">
 					<span th:text="${comment.getText()}"></span>
 				</div>
