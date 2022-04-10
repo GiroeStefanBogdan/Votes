@@ -3,6 +3,7 @@ package com.votes.web;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Optional;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.votes.entity.Comment;
 import com.votes.entity.Feature;
 import com.votes.entity.User;
 import com.votes.service.FeatureService;
@@ -34,18 +36,24 @@ public class featureController {
 		Feature feature = featureService.createFeature(productId,  user);
 		return "redirect:/products/" + productId + "/features/" + feature.getId();
 	}
-
+	
 	@GetMapping("{featureId}")
 	public String getFeature(@AuthenticationPrincipal User user, ModelMap model, @PathVariable Long productId, @PathVariable Long featureId) {
 		Optional<Feature> featureOpt = featureService.findById(featureId);
 		if(featureOpt.isPresent()) {
-			model.put("feature", featureOpt.get());
-			model.put("comments", featureOpt.get().getComments());
+			Feature feature = featureOpt.get();
+			model.put("feature", feature);
+			model.put("comments", getCommentsWithoutDuplicates(feature));
 		}
 		model.put("user", user);
 		
 		
 		return "feature";
+	}
+
+	private Set<Comment> getCommentsWithoutDuplicates(Feature feature) {
+		Set<Comment> comments = feature.getComments();
+		return comments;
 	}
 	
 	@PostMapping("{featureId}")

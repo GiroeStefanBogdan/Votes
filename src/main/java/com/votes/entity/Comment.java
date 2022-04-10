@@ -3,6 +3,7 @@ package com.votes.entity;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
-public class Comment {
+public class Comment implements Comparable<Comment>{
 	private Long id;
 	private String text;
 	private User user;
@@ -81,6 +82,33 @@ public class Comment {
 	}
 	public void setComment(Comment comment) {
 		this.comment = comment;
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Comment other = (Comment) obj;
+		return Objects.equals(id, other.id);
+	}
+	@Override
+	public String toString() {
+		return "Comment [id=" + id + ", text=" + text + "]";
+	}
+	@Override
+	public int compareTo(Comment that) {
+		int comparedValue = this.createdDate.compareTo(that.createdDate);
+		if(comparedValue == 0) {
+			comparedValue = this.id.compareTo(that.id);
+		}
+		return comparedValue;
 	}
 
 	
