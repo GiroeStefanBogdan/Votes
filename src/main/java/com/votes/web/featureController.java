@@ -40,8 +40,11 @@ public class featureController {
 		Optional<Feature> featureOpt = featureService.findById(featureId);
 		if(featureOpt.isPresent()) {
 			model.put("feature", featureOpt.get());
+			model.put("comments", featureOpt.get().getComments());
 		}
 		model.put("user", user);
+		
+		
 		return "feature";
 	}
 	

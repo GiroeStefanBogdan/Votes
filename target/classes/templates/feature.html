@@ -21,6 +21,10 @@
 				<input type="hidden" th:field="${feature.id}"/>
 				<input type="hidden" th:field="${feature.product}"/>
 				<input type="hidden" th:field="${feature.status}"/>
+				
+				<div th:text="|feature.id = ${feature.id}|"></div>
+				<div th:text="|user.id = ${user.getId()}|"></div>
+				
 				<div class="mb-3">
 					<label for="exampleInputTitle" class="form-label">Title: </label>
 					<input type="text" class="form-control" id="exampleInputTitle" th:field="${feature.title}" th:attrappend="disabled=${user.id == feature.user.id ? null : 'disabled'}"/>			
@@ -33,6 +37,12 @@
 					<button type="submit" class="btn btn-primary">Save</button>
 				</div>
 			</form>
+			<div style="margin-top: 2em;"> 
+				<h2>Comments</h2>
+				<div th:each="comment: ${comments}">
+					<span th:text="${comment.getText()}"></span>
+				</div>
+			</div>
 		</div>
 	</body>
 
