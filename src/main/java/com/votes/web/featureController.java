@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +44,7 @@ public class featureController {
 		if(featureOpt.isPresent()) {
 			Feature feature = featureOpt.get();
 			model.put("feature", feature);
-			model.put("comments", getCommentsWithoutDuplicates(feature));
+			model.put("comments", getCommentsWithoutDuplicates(feature.getComments()));
 		}
 		model.put("user", user);
 		
@@ -51,9 +52,11 @@ public class featureController {
 		return "feature";
 	}
 
-	private Set<Comment> getCommentsWithoutDuplicates(Feature feature) {
-		Set<Comment> comments = feature.getComments();
-		return comments;
+	private Set<Comment> getCommentsWithoutDuplicates( Set<Comment> comments) {
+		for(Comment comment : comments){
+			return getCommentsWithoutDuplicates(comment.getComments());
+		}
+		return new TreeSet<>();
 	}
 	
 	@PostMapping("{featureId}")
