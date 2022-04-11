@@ -55,7 +55,8 @@ public class featureController {
 	private Set<Comment> getCommentsWithoutDuplicates( Set<Comment> comments) {
 		for(Comment comment : comments){
 			return getCommentsWithoutDuplicates(comment.getComments());
-		}
+		}//Trebuie completata metoda asta
+		
 		return new TreeSet<>();
 	}
 	
