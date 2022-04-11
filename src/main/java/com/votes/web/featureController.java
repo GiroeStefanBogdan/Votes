@@ -2,8 +2,11 @@ package com.votes.web;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.slf4j.Logger;
@@ -44,7 +47,8 @@ public class featureController {
 		if(featureOpt.isPresent()) {
 			Feature feature = featureOpt.get();
 			model.put("feature", feature);
-			model.put("comments", getCommentsWithoutDuplicates(feature.getComments()));
+			 Set<Comment> commentsWithoutDuplicates = getCommentsWithoutDuplicates(0, new HashSet<Long>(), feature.getComments());
+		      model.put("comments", commentsWithoutDuplicates);
 		}
 		model.put("user", user);
 		
@@ -52,13 +56,23 @@ public class featureController {
 		return "feature";
 	}
 
-	private Set<Comment> getCommentsWithoutDuplicates( Set<Comment> comments) {
-		for(Comment comment : comments){
-			return getCommentsWithoutDuplicates(comment.getComments());
-		}//Trebuie completata metoda asta
-		
-		return new TreeSet<>();
-	}
+	 private Set<Comment> getCommentsWithoutDuplicates(int page, Set<Long> visitedComments, Set<Comment> comments) {
+		    page++;
+		    Iterator<Comment> itr = comments.iterator();
+		    while (itr.hasNext()) {
+		      Comment comment = itr.next();
+		      boolean addedToVisitedComments = visitedComments.add(comment.getId());
+		      if (!addedToVisitedComments) {
+		        itr.remove();
+		        if (page != 1)
+		          return comments;
+		      }
+		      if (addedToVisitedComments && !comment.getComments().isEmpty())
+		        getCommentsWithoutDuplicates(page, visitedComments, comment.getComments());
+		    }
+		    
+		    return comments;
+		  }
 	
 	@PostMapping("{featureId}")
 	public String updateFeature (@AuthenticationPrincipal User user, Feature feature, @PathVariable Long productId, @PathVariable Long featureId) {
