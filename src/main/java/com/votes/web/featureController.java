@@ -48,7 +48,7 @@ public class featureController {
 			Feature feature = featureOpt.get();
 			model.put("feature", feature);
 			 SortedSet<Comment> commentsWithoutDuplicates = getCommentsWithoutDuplicates(0, new HashSet<Long>(), feature.getComments());
-		      model.put("comments", commentsWithoutDuplicates);
+		      model.put("thread", commentsWithoutDuplicates);
 		}
 		model.put("user", user);
 		
