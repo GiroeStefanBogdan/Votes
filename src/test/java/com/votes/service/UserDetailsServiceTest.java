@@ -26,14 +26,14 @@ class UserDetailsServiceTest {
 
 
 		if (isPasswordMatches) { // correct password
-		 System.out.println("Da, aia e parola");
+		// System.out.println("Da, aia e parola");
 		
 		//System.out.println(encodedPassword);
 		
 		assertThat(rawPassword, not(encodedPassword));
 		
 		}else {
-			System.out.println("Nu e buna parola");
+			//System.out.println("Nu e buna parola");
 		}
 
 } 
