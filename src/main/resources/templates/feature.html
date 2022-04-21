@@ -7,8 +7,8 @@
 		$(function (){
 			$("button[id*='replyBtn-']").click(function () {
 			$("form[id*='replyForm-']:not(.d-none)").each(function () {
-				let commentId = $(this).prop("id").split("-")[1]
-				let formId = "replyForm-" + commentId
+				//used to hide curently displayed child comment forms
+				let formId = $(this).prop("id")
 				
 				$("#" + formId).addClass("d-none")
 			})
@@ -64,7 +64,7 @@
 				
 				<div class="mb-3" style="margin-top:1.5em">
 					<label for="text" class="form-label">Leave a comment bellow</label>
-					<textarea th:field="${comment.text}" class="form-control"
+					<textarea th:field="${rootComment.text}" class="form-control"
 						th:attrappend="disabled=${user.id == feature.user.id ? null : 'disabled'}"> </textarea>
 				</div>
 				<div>
