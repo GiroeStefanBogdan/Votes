@@ -11,11 +11,13 @@
 				</div>
 				<form th:id="|replyForm-${comment.id}|" class ="d-none" th:action="@{/products/{productId}/features/{featureId}/comments(productId=${feature.product.id},featureId=${feature.id})}" method="post">
 				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-				
+				<input type="hidden" name="parentId" th:id="|parentId-${comment.id}" th:value="${comment.id}"/>
 				<div class="mb-3" style="margin-top:1.5em">
 					<label for="text" class="form-label">Leave a comment bellow</label>
-					<textarea th:field="${comment.text}" class="form-control"
-						th:attrappend="disabled=${user.id == feature.user.id ? null : 'disabled'}"> </textarea>
+
+					<textarea class="form-control" name="childCommentText" th:id="|childCommentText-${comment.id}|" rows="3"></textarea>
+        
+						
 				</div>
 				<div>
 					<button type="submit" class="btn btn-primary">Add comment</button>
