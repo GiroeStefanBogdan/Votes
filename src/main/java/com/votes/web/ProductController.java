@@ -12,17 +12,23 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.votes.entity.Product;
 import com.votes.entity.User;
 import com.votes.repositories.ProductRepository;
+import com.votes.service.ProductService;
 
 import javassist.NotFoundException;
 
@@ -31,7 +37,11 @@ public class ProductController {
 	private Logger log = LoggerFactory.getLogger(ProductController.class);
 	
 	@Autowired
+	private ProductService productService;	
+	@Autowired
 	private ProductRepository productRepo;
+
+	
 	
 	
 	
@@ -60,7 +70,7 @@ public class ProductController {
 					model.put("product", productOpt.get());
 				}
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
+				
 				log.error("There was an error decoding a product URL", e);
 			}
 		}
@@ -72,6 +82,12 @@ public class ProductController {
 		product = productRepo.save(product);
 		System.out.println(product);
 		return "redirect:/products/" + product.getId();
+	}
+	
+	@DeleteMapping("/products/{productId}/delete")
+	public ResponseEntity<Long> deleteProduct(@PathVariable(value="Id") Long productId, Product product, @PathVariable Long userId, User user) {
+		productRepo.deleteById(product.getId());
+		return ResponseEntity.ok(productId);
 	}
 	
 	@PostMapping("/products")

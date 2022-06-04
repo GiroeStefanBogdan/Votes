@@ -8,7 +8,7 @@ import com.votes.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	User findByUsername(String username);//Object that make CRUD operation  //Select ..
+	User findByUsername(String username);//Object that make CRUD operation  //
 
 	 
 
