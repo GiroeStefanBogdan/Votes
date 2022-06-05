@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.votes.entity.Comment;
 import com.votes.entity.Feature;
+import com.votes.entity.Product;
 import com.votes.entity.User;
+import com.votes.repositories.FeatureRepository;
 import com.votes.service.FeatureService;
 
 
@@ -34,6 +36,16 @@ public class featureController {
 	
 	@Autowired	
 	private FeatureService featureService;
+	
+	@Autowired
+	private FeatureRepository featureRepo;
+	
+	@GetMapping("/products/{productId}/features/{featureId}/deleteAFeature")
+		public String deleteAFeature(@PathVariable Feature featureId, @PathVariable Product productId) {
+			featureRepo.deleteById(featureId.getId());
+			return "redirect:/p/productId";
+		}
+	
 	
 	@PostMapping("")
 	public String createFeature(@AuthenticationPrincipal User user, @PathVariable Long productId) {

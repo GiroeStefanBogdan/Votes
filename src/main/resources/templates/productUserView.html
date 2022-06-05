@@ -10,9 +10,14 @@
 			<h1 th:text="${product.name}">Product</h1>
 			
 			<div th:each="feature : ${product.features}">
+				<a th:href="@{/products/{productId}/features/{featureId}/deleteAFeature(productId=${product.id},featureId=${feature.id})}" class="btn btn-danger float-end">Delete</a>
 				<a th:href="@{/products/{productId}/features/{featureId}(productId=${product.id},featureId=${feature.id})}" th:text="${feature.title}"></a>
+				<br>
+				<br>
+						
 			</div>
 			
+							
 			<form th:action = "@{/products/{productId}/features(productId=${product.id})}" method = "post">
 				<input type="hidden" th:name = "${_csrf.parameterName}" th:value="${_csrf.token}"/>
 				
