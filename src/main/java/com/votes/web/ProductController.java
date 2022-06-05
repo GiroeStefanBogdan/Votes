@@ -51,21 +51,23 @@ public class ProductController {
 	}
 	
 	@GetMapping("/ViewAllProducts")
-		public String ViewAllProducts(ModelMap model) {
+		public String ViewAllProducts(ModelMap model, @AuthenticationPrincipal User user) {
 		List<Product> products = productRepo.findAll();
 		model.put("allProducts", products);
+		model.put("user", user);
 			return "ViewAllProducts";
 		}
 	
 	
 	@GetMapping("/p/{productName}")
-	public String productUserView (@PathVariable String productName, ModelMap model) {
+	public String productUserView (@PathVariable String productName, ModelMap model,@AuthenticationPrincipal User user) {
 		if(productName != null) {
 			try {
 				String decodedProductName = URLDecoder.decode(productName, StandardCharsets.UTF_8.name());
 				Optional<Product> productOpt = productRepo.findByName(decodedProductName);
 				if(productOpt.isPresent()) {
 					model.put("product", productOpt.get());
+					model.put("user", user);
 				}
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
