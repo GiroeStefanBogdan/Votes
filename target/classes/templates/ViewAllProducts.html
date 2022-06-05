@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+  <head>
+    <script th:replace="fragments/header :: headerElement"></script>
+    <title>Votes Homepage</title>
+  </head>
+  <body>
+  <div th:replace="fragments/header :: header"></div>
+    <div class="container">
+      <div class="row" style="margin-top: 2em">
+        <div class="col-8">
+          <h1>View All Products Proposed By All Users</h1>
+          <div class="card" th:each="product : ${allProducts}">
+				  <div class="card-body">
+				    <h5 class="card-title" th:text="${product.name}">Special title treatment</h5>
+					<h6 class="card-subtitle mb-2 text-muted" th:text="${product.published ?  'Published': 'Not Published'}">Card subtitle</h6>
+					<a th:href="@{/products/{productId}(productId=${product.id})}" class="btn btn-info">Edit</a>
+					
+				    <a th:href="@{/p/{productName}(productName=${product.name})}" class="btn btn-info">View Feature Requests</a>
+				   
+				  </div>
+			</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
