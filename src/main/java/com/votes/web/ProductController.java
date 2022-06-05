@@ -73,6 +73,11 @@ public class ProductController {
 		System.out.println(product);
 		return "redirect:/products/" + product.getId();
 	}
+	@GetMapping("/products/{productId}/delete")
+		public String deleteAProduct(@PathVariable Product productId) {
+			productRepo.deleteById(productId.getId());
+			return "redirect:/dashboard";
+		}
 	
 	@PostMapping("/products")
 	public String createProducts(@AuthenticationPrincipal User user) {
