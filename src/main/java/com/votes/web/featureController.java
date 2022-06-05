@@ -29,7 +29,7 @@ import com.votes.service.FeatureService;
 
 
 @Controller
-@RequestMapping("/products/{productId}/features")
+@RequestMapping("/products/{product}/features")
 public class featureController {
 
 	Logger log = LoggerFactory.getLogger(featureController.class);
@@ -40,24 +40,28 @@ public class featureController {
 	@Autowired
 	private FeatureRepository featureRepo;
 	
-	@GetMapping("/products/{productId}/features/{featureId}/deleteAFeature")
-		public String deleteAFeature(@PathVariable Feature featureId, @PathVariable Product productId) {
-			featureRepo.deleteById(featureId.getId());
-			return "redirect:/p/productId";
+	@GetMapping("/{feature}/deleteAFeature")
+		public String deleteAFeature(@PathVariable Feature feature, @PathVariable Product product,@AuthenticationPrincipal User user) {
+			if(user.getId()==product.getUser().getId()) {
+				featureRepo.deleteById(feature.getId());
+			}else {
+				return "redirect:/Unauthorized";
+			}
+			return "redirect:/p/"+ product.getName();
 		}
 	
 	
 	@PostMapping("")
-	public String createFeature(@AuthenticationPrincipal User user, @PathVariable Long productId) {
-		Feature feature = featureService.createFeature(productId,  user);
-		return "redirect:/products/" + productId + "/features/" + feature.getId();
+	public String createFeature(@AuthenticationPrincipal User user, @PathVariable Product product) {
+		Feature feature = featureService.createFeature(product.getId(),  user);
+		return "redirect:/products/" + product.getId() + "/features/" + feature.getId();
 	}
 	
-	@GetMapping("{featureId}")
-	public String getFeature(@AuthenticationPrincipal User user, ModelMap model, @PathVariable Long productId, @PathVariable Long featureId) {
-		Optional<Feature> featureOpt = featureService.findById(featureId);
+	@GetMapping("{feature}")
+	public String getFeature(@AuthenticationPrincipal User user, ModelMap model, @PathVariable Product product, @PathVariable Feature feature) {
+		Optional<Feature> featureOpt = featureService.findById(feature.getId());
 		if(featureOpt.isPresent()) {
-			Feature feature = featureOpt.get();
+			feature = featureOpt.get();
 			model.put("feature", feature);
 			 SortedSet<Comment> commentsWithoutDuplicates = getCommentsWithoutDuplicates(0, new HashSet<Long>(), feature.getComments());
 		      model.put("thread", commentsWithoutDuplicates);
@@ -88,8 +92,8 @@ public class featureController {
 	  }
 	  
 	
-	@PostMapping("{featureId}")
-	public String updateFeature (@AuthenticationPrincipal User user, Feature feature, @PathVariable Long productId, @PathVariable Long featureId) {
+	@PostMapping("{feature}")
+	public String updateFeature (@AuthenticationPrincipal User user,Feature feature, @PathVariable Product product) {
 		feature.setUser(user);
 		feature = featureService.save(feature);
 		

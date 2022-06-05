@@ -10,15 +10,18 @@
 			<h1 th:text="${product.name}">Product</h1>
 			
 			<div th:each="feature : ${product.features}">
-				<a th:href="@{/products/{productId}/features/{featureId}/deleteAFeature(productId=${product.id},featureId=${feature.id})}" class="btn btn-danger float-end">Delete</a>
-				<a th:href="@{/products/{productId}/features/{featureId}(productId=${product.id},featureId=${feature.id})}" th:text="${feature.title}"></a>
+			<div th:if="${user.id==product.user.id}">
+				<a th:href="@{/products/{product}/features/{feature}/deleteAFeature(product=${product.id},feature=${feature.id})}" class="btn btn-danger float-end">Delete</a>
+			</div>
+				<a th:href="@{/products/{product}/features/{feature}(product=${product.id},feature=${feature.id})}" th:text="${feature.title}"></a>
+				
 				<br>
 				<br>
 						
 			</div>
 			
 							
-			<form th:action = "@{/products/{productId}/features(productId=${product.id})}" method = "post">
+			<form th:action = "@{/products/{product}/features(product=${product.id})}" method = "post">
 				<input type="hidden" th:name = "${_csrf.parameterName}" th:value="${_csrf.token}"/>
 				
 				<button class = "btn btn-primary btn-lg">Create Feature Request</button>
