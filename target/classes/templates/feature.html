@@ -45,13 +45,11 @@
 
 			<div class="mb-3">
 				<label for="exampleInputTitle" class="form-label">Title: </label>
-				<input type="text" class="form-control" id="exampleInputTitle" th:field="${feature.title}"
-					th:attrappend="disabled=${user.id == feature.user.id ? null : 'disabled'}" />
+				<input type="text" class="form-control" id="exampleInputTitle" th:field="${feature.title}"/>
 			</div>
 			<div class="mb-3">
 				<label for="exampleInputDescription" class="form-label">Description: </label>
-				<textarea th:field="${feature.description}" class="form-control"
-					th:attrappend="disabled=${user.id == feature.user.id ? null : 'disabled'}"> </textarea>
+				<textarea th:field="${feature.description}" class="form-control"> </textarea>
 			</div>
 			<div style="margin-top: 2em;" th:if="${user.id == feature.user.id}">
 				<button type="submit" class="btn btn-primary">Save</button>
@@ -64,8 +62,8 @@
 				
 				<div class="mb-3" style="margin-top:1.5em">
 					<label for="text" class="form-label">Leave a comment bellow</label>
-					<textarea th:field="${rootComment.text}" class="form-control"
-						th:attrappend="disabled=${user.id == feature.user.id ? null : 'disabled'}"> </textarea>
+					<textarea th:field="${rootComment.text}" class="form-control"> </textarea>
+					<!-- fOR DISABLE INPUT: th:attrappend="disabled=${user.id == feature.user.id ? null : 'disabled'}" -->
 				</div>
 				<div>
 					<button type="submit" class="btn btn-primary">Add comment</button>
