@@ -84,10 +84,10 @@ public class ProductController {
 		return "redirect:/products/" + product.getId();
 	}
 	
-	@DeleteMapping("/products/{productId}/delete")
-	public ResponseEntity<Long> deleteProduct(@PathVariable(value="Id") Long productId, Product product, @PathVariable Long userId, User user) {
-		productRepo.deleteById(product.getId());
-		return ResponseEntity.ok(productId);
+	@GetMapping("/products/{productId}/delete")
+	public String deleteProduct(@PathVariable Product productId) {
+		productRepo.deleteById(productId.getId());
+		return "redirect:/dashboard";
 	}
 	
 	@PostMapping("/products")
