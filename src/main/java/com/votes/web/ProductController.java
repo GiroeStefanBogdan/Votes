@@ -50,6 +50,14 @@ public class ProductController {
 		return "product";
 	}
 	
+	@GetMapping("/ViewAllProducts")
+		public String ViewAllProducts(ModelMap model) {
+		List<Product> products = productRepo.findAll();
+		model.put("allProducts", products);
+			return "ViewAllProducts";
+		}
+	
+	
 	@GetMapping("/p/{productName}")
 	public String productUserView (@PathVariable String productName, ModelMap model) {
 		if(productName != null) {
