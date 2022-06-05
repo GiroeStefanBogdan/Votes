@@ -5,13 +5,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity 
-@Table(name="like")
+@Table(name="likes")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Like {
 	private Long id;
@@ -40,6 +41,12 @@ public class Like {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@PreRemove
+	public void preRemove() {
+		//this.user = null;
+		this.product = null;
 	}
 
 	

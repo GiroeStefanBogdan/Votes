@@ -16,7 +16,7 @@ public class LikeController {
 	private LikeService likeService;
 	@GetMapping("/products/{product}/like")
 	public String likeProduct(@AuthenticationPrincipal User user, @PathVariable Product product) {
-		likeService.createLike(product, user);
+		likeService.toggleLike(product, user);
 		return "redirect:/ViewAllProducts";
 	}
 

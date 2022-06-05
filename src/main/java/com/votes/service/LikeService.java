@@ -20,30 +20,37 @@ public class LikeService {
 	@Autowired
 	private LikeRepository likeRepo;
 	
-	public Like createLike(Product product, User user) {
-		if(!likeExist(product, user)) {
+	
+	public void toggleLike(Product product, User user) {
+		if(findLike(product, user)!= null) {
+			deleteLike(product, user);
+		}else {
+			createLike(product, user);
+		}
+	}
+	
+	private Like createLike(Product product, User user) {
+		
 			Like like = new Like();
 			like.setProduct(product);
 			like.setUser(user);
 			likeRepo.save(like);
-			return like;
-		}else {
-			return null;
-		}
-	
-		
-		
-	}
-	public int likeCount(Product product) {
-		return product.getLikes().size();
+			return like;	
 	}
 	
-	private Boolean likeExist(Product product, User user) {
+	private void deleteLike(Product product, User user) {
+		Like like = findLike(product, user);
+		likeRepo.deleteById(like.getId());
+		System.out.println(like);
+	}
+	
+	
+	private Like findLike(Product product, User user) {
 	Set<Like> productLikes = product.getLikes();
-	Boolean found = false;
+	Like found = null;
 	for(Like like: productLikes) {
 		if(like.getUser().getId()==user.getId()) {
-			found = true;
+			found = like;
 		}
 	};
 		return found;
