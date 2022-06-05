@@ -28,6 +28,8 @@ public class User{
 	private Set<Authority> authorities = new HashSet<>();
 	private Set<Product> products = new HashSet<>();
 	private Set<Feature> features = new HashSet<>();
+	private Set<Like> likes = new HashSet<>();
+	
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)//strategy=... is for autoincrement id	
 	public Long getId() {
@@ -61,6 +63,14 @@ public Set<Product> getProducts() {
 }
 public void setProducts(Set<Product> products) {
 	this.products = products;
+}
+
+@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy="user")
+public Set<Like> getLikes() {
+	return likes;
+}
+public void setLikes(Set<Like> likes) {
+	this.likes = likes;
 }
 	
 	
