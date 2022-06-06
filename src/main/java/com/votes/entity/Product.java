@@ -14,7 +14,8 @@ public class Product {
 	private User user;
 	private Set<Feature> features = new HashSet<>();
 	private Boolean published;
-	private Set<Like> likes = new HashSet<>();
+	public Set<Like> likes = new HashSet<>();
+	public Set<Dislike> dislikes = new HashSet<>();
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long getId() {
@@ -55,6 +56,7 @@ public class Product {
 	public void setLikes(Set<Like> likes) {
 		this.likes = likes;
 	}
+	
 	public Boolean getPublished() {
 		return published;
 	}
@@ -66,6 +68,12 @@ public class Product {
 		return "Product [Id=" + Id + ", name=" + name + ", user=" + user + ", features=" + features + ", published="
 				+ published + "]";
 	}
-
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="product")//cascad -> delete all the features if the product is deleted
+	public Set<Dislike> getDislikes() {
+		return dislikes;
+	}
+	public void setDislikes(Set<Dislike> dislikes) {
+		this.dislikes = dislikes;
+	}
 	
 }

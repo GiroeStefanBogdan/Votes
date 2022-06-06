@@ -26,10 +26,10 @@ public class User{
 	private String password;
 	private String name;
 	private Set<Authority> authorities = new HashSet<>();
-	private Set<Product> products = new HashSet<>();
+	public Set<Product> products = new HashSet<>();
 	private Set<Feature> features = new HashSet<>();
-	private Set<Like> likes = new HashSet<>();
-	
+	public Set<Like> likes = new HashSet<>();
+	public Set<Dislike> dislike = new HashSet<>();
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)//strategy=... is for autoincrement id	
 	public Long getId() {
@@ -97,6 +97,13 @@ public void setLikes(Set<Like> likes) {
 	}
 	public void setFeatures(Set<Feature> features) {
 		this.features = features;
+	}
+	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy="user")
+	public Set<Dislike> getDislike() {
+		return dislike;
+	}
+	public void setDislike(Set<Dislike> dislike) {
+		this.dislike = dislike;
 	}
 
 }
