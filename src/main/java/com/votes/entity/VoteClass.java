@@ -3,6 +3,7 @@ package com.votes.entity;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.PreRemove;
 
 
 @Entity
@@ -28,5 +29,9 @@ public class VoteClass {
 	public void setPk(VoteId pk) {
 		this.pk = pk;
 	}
-	
+	@PreRemove
+	public void preRemove() {
+		this.pk = null;
+		
+	}
 }

@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -119,5 +120,10 @@ public class Comment implements Comparable<Comment>{
 		return comparedValue;
 	}
 
-	
+	@PreRemove
+	public void preRemove() {
+		this.id = null;
+		this.comment = null;
+		
+	}
 }

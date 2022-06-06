@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -105,5 +106,13 @@ public void setLikes(Set<Like> likes) {
 	public void setDislike(Set<Dislike> dislike) {
 		this.dislike = dislike;
 	}
-
+	@PreRemove
+	public void preRemove() {
+		this.likes = null;
+		this.products = null;
+		this.features = null;
+		this.authorities = null;
+		this.dislike = null;
+		
+	}
 }
