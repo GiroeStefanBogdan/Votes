@@ -12,9 +12,9 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity 
-@Table(name="likes")
+@Table(name="dislikes")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
-public class Like {
+public class Dislike {
 	private Long id;
 	private Product product;
 	private User user;
