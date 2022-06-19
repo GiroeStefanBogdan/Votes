@@ -47,6 +47,7 @@ public class featureController {
 			}else {
 				return "redirect:/Unauthorized";
 			}
+
 			return "redirect:/p/"+ product.getName();
 		}
 	

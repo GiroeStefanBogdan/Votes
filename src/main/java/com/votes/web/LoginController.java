@@ -13,14 +13,14 @@ import com.votes.service.UserService;
 public class LoginController {
 	@Autowired
 	private UserService userService;
- 
+
+
 	@GetMapping("/login")
 	public String login() {
 		return "login";
 	}
-	
 
-	
+
 	@GetMapping("/register")
 	public String register(ModelMap model) {
 		model.put("user", new User());

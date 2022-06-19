@@ -1,5 +1,7 @@
 package com.votes.service;
 
+import com.votes.entity.Role;
+import com.votes.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepo;
-	
+
+	@Autowired
+	RoleRepository roleRepo;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
@@ -25,6 +29,10 @@ public class UserService {
 		authority.setAuthority("ROLE_USER");
 		authority.setUser(user); 
 		user.getAuthorities().add(authority);
+		Role role = roleRepo.getById(2L);
+		user.setRole(role);
+
+		//System.out.println("UserService roleRepo." + roleRepo.getById(2L).getRole());
 		return userRepo.save(user);
 		
 	}
