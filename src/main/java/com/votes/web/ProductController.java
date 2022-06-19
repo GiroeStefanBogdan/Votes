@@ -9,6 +9,8 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.votes.entity.Role;
+import com.votes.repositories.RoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,8 @@ public class ProductController {
 	@Autowired
 	private ProductRepository productRepo;
 	
-	
+	@Autowired
+	RoleRepository roleRepo;
 	
 	@GetMapping("/products/{productId}")
 	public String getProduct(@PathVariable Long productId, ModelMap model, HttpServletResponse response) throws IOException {
@@ -51,11 +54,15 @@ public class ProductController {
 	}
 	
 	@GetMapping("/ViewAllProducts")
-		public String ViewAllProducts(ModelMap model, @AuthenticationPrincipal User user) {
+		public String ViewAllProducts(ModelMap model, @AuthenticationPrincipal User user, @AuthenticationPrincipal Role role) {
 		List<Product> products = productRepo.findAll();
 		model.put("allProducts", products);
 		model.put("user", user);
-			return "ViewAllProducts";
+		//model.put("role", roleRepo.getById(user.getId()).getRole());
+
+		model.put("role2", user.getId());
+
+		return "ViewAllProducts";
 		}
 	
 	
@@ -74,6 +81,7 @@ public class ProductController {
 				log.error("There was an error decoding a product URL", e);
 			}
 		}
+		model.put("role", user.getId());
 		return "productUserView";
 	}
 	

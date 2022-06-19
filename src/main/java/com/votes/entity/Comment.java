@@ -118,6 +118,5 @@ public class Comment implements Comparable<Comment>{
 		}
 		return comparedValue;
 	}
-
 	
 }

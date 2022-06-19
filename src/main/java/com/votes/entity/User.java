@@ -3,14 +3,7 @@ package com.votes.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -20,18 +13,50 @@ import com.votes.security.Authority;
 @Table(name = "users")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class User{
-	
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)//strategy=... is for autoincrement id
 	private Long id;
 	private String username;
 	private String password;
 	private String name;
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER, mappedBy="user")
 	private Set<Authority> authorities = new HashSet<>();
+	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy="user")
 	public Set<Product> products = new HashSet<>();
+	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy="user")
 	private Set<Feature> features = new HashSet<>();
+	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy="user")
 	public Set<Like> likes = new HashSet<>();
+	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy="user")
 	public Set<Dislike> dislike = new HashSet<>();
-	
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)//strategy=... is for autoincrement id	
+
+
+
+
+	@ManyToOne
+	@JoinColumn(name = "roles_id")
+	private Role roles;
+
+	public Role getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Role roles) {
+		this.roles = roles;
+	}
+
+
+	public Role getRole() {
+		return roles;
+	}
+
+	public void setRole(Role role) {
+		this.roles = role;
+	}
+
+
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -57,7 +82,7 @@ public class User{
 		this.name = name;
 	}
 	
-@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy="user")
+
 public Set<Product> getProducts() {
 	return products;
 }
@@ -65,7 +90,7 @@ public void setProducts(Set<Product> products) {
 	this.products = products;
 }
 
-@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy="user")
+
 public Set<Like> getLikes() {
 	return likes;
 }
@@ -74,7 +99,7 @@ public void setLikes(Set<Like> likes) {
 }
 	
 	
-	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER, mappedBy="user")
+
 	public Set<Authority> getAuthorities() {
 		return authorities;
 	}
@@ -91,14 +116,13 @@ public void setLikes(Set<Like> likes) {
 	
 	
 	}
-	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy="user")
+
 	public Set<Feature> getFeatures() {
 		return features;
 	}
 	public void setFeatures(Set<Feature> features) {
 		this.features = features;
 	}
-	@OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy="user")
 	public Set<Dislike> getDislike() {
 		return dislike;
 	}
